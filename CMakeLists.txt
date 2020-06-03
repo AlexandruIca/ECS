@@ -24,3 +24,9 @@ enable_sanitizers(project_options)
 set(ECS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/)
+
+option(BUILD_TESTS "Build the tests that come with `ecs`" OFF)
+
+if(BUILD_TESTS)
+  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tests/)
+endif()
