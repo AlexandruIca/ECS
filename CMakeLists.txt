@@ -28,5 +28,6 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/)
 option(BUILD_TESTS "Build the tests that come with `ecs`" OFF)
 
 if(BUILD_TESTS)
+  enable_testing()
   add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tests/)
 endif()
