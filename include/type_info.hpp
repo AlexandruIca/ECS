@@ -51,7 +51,7 @@ namespace ecs {
 /// ```
 ///
 template<typename T>
-[[nodiscard]] auto get_id() noexcept -> id_type
+[[nodiscard]] inline auto get_id() noexcept -> id_type
 {
     return impl::type_info::template get_id<T>();
 }
