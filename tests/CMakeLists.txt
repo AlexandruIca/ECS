@@ -6,3 +6,4 @@ endfunction()
 
 build_test(basic_test)
 build_test(entity_test)
+build_test(type_info_test)
