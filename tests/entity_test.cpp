@@ -1,9 +1,11 @@
-#include <cassert>
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include <doctest/doctest.h>
+
 #include <utility>
 
 #include "entity.hpp"
 
-auto main(int, char*[]) noexcept -> int
+TEST_CASE("[ecs::entity] Basic - constructors, operator==, operator=...")
 {
     constexpr ecs::id_type default_value = 0;
     constexpr ecs::id_type test_value = 10;
@@ -16,10 +18,10 @@ auto main(int, char*[]) noexcept -> int
 
     e4 = e3;
 
-    assert(e.id() == default_value);
-    assert(e1.id() == test_value);
-    assert(e2.id() == e1.id());
-    assert(e4.id() == test_value);
-    assert(e1 == e2);
-    assert(e3 == e4);
+    REQUIRE(e.id() == default_value);
+    REQUIRE(e1.id() == test_value);
+    REQUIRE(e2.id() == e1.id());
+    REQUIRE(e4.id() == test_value);
+    REQUIRE(e1 == e2);
+    REQUIRE(e3 == e4);
 }

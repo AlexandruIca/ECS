@@ -1,15 +1,16 @@
-#include <cassert>
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include <doctest/doctest.h>
 
 #include "type_info.hpp"
 
-auto main(int, char*[]) noexcept -> int
+TEST_CASE("[ecs::get_id] Basic requirements")
 {
     constexpr ecs::id_type int_value = 0;
     constexpr ecs::id_type float_value = 1;
     constexpr ecs::id_type double_value = 2;
 
-    assert(ecs::get_id<int>() == int_value);
-    assert(ecs::get_id<float>() == float_value);
-    assert(ecs::get_id<int>() == int_value);
-    assert(ecs::get_id<double>() == double_value);
+    REQUIRE(ecs::impl::type_info::get_id<int>() == int_value);
+    REQUIRE(ecs::impl::type_info::get_id<float>() == float_value);
+    REQUIRE(ecs::impl::type_info::get_id<int>() == int_value);
+    REQUIRE(ecs::impl::type_info::get_id<double>() == double_value);
 }
