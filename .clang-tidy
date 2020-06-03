@@ -1,5 +1,5 @@
 ---
-Checks: '*,-fuchsia-*,-google-*,-zircon-*,-abseil-*,-llvm-*,-readability-named-parameter,-cppcoreguidelines-pro-bounds-*,-hicpp-no-array-decay'
+Checks: '*,-fuchsia-*,-google-*,-zircon-*,-abseil-*,-llvm-*,-readability-named-parameter,-cppcoreguidelines-pro-bounds-*,-hicpp-no-array-decay,-readability-convert-member-functions-to-static,-cppcoreguidelines-pro-type-*,-cert-err58-cpp'
 WarningsAsErrors: '1'
 HeaderFilterRegex: ''
 FormatStyle: none
