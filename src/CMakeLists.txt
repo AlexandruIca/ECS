@@ -1,6 +1,6 @@
 find_package(spdlog REQUIRED)
 
-set(ECS_SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/test.cpp)
+set(ECS_SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/entity.cpp)
 
 add_library(ecs STATIC ${ECS_SOURCE_FILES})
 add_library(ecs_shared SHARED ${ECS_SOURCE_FILES})
