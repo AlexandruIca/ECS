@@ -1,5 +1,5 @@
 ---
-Checks: '*,-fuchsia-*,-google-*,-zircon-*,-abseil-*,-llvm-*'
+Checks: '*,-fuchsia-*,-google-*,-zircon-*,-abseil-*,-llvm-*,-readability-named-parameter'
 WarningsAsErrors: '1'
 HeaderFilterRegex: ''
 FormatStyle: none
