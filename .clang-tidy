@@ -1,5 +1,5 @@
 ---
-Checks: '*,-fuchsia-*,-google-*,-zircon-*,-abseil-*,-llvm-*,-cppcoreguidelines-pro-bounds-*,-hicpp-no-array-decay,-readability-convert-member-functions-to-static,-cppcoreguidelines-pro-type-*,-cert-err58-cpp'
+Checks: '*,-fuchsia-*,-google-*,-zircon-*,-abseil-*,-llvm-*,-cppcoreguidelines-pro-bounds-*,-hicpp-no-array-decay,-readability-convert-member-functions-to-static,-cppcoreguidelines-pro-type-*,-cert-err58-cpp,-clang-analyzer-cplusplus.NewDeleteLeaks'
 WarningsAsErrors: '1'
 HeaderFilterRegex: ''
 FormatStyle: none
