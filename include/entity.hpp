@@ -28,6 +28,13 @@ public:
     }
 };
 
+[[nodiscard]] auto operator==(entity const&, entity const&) noexcept -> bool;
+
+[[nodiscard]] inline auto operator!=(entity const& a, entity const& b) noexcept -> bool
+{
+    return !(a == b);
+}
+
 } // namespace ecs
 
 #endif // !ECS_ENTITY_HPP
