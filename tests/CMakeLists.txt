@@ -7,3 +7,4 @@ function(build_test TEST_NAME)
 endfunction()
 
 build_test(basic_test)
+build_test(entity_test)
