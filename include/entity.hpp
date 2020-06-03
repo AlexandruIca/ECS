@@ -6,6 +6,9 @@
 
 namespace ecs {
 
+///
+/// \brief Basic wrapper around \ref id_type.
+///
 class entity
 {
 private:
