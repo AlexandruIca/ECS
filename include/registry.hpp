@@ -45,7 +45,7 @@ private:
     ///
     /// \brief Number incremented for every new instance of \ref ecs::entity.
     ///
-    inline static std::atomic<id_type> m_current_entity_id{ 0 };
+    std::atomic<id_type> m_current_entity_id{ 0 };
 
     ///
     /// \brief Describes layout for how components will be stored.
@@ -89,16 +89,16 @@ private:
 public:
     registry() noexcept = default;
     registry(registry const&) = delete;
-    registry(registry&&) noexcept = default;
+    registry(registry&&) noexcept = delete;
     ~registry() noexcept;
 
     auto operator=(registry const&) -> registry& = delete;
-    auto operator=(registry&&) noexcept -> registry& = default;
+    auto operator=(registry&&) noexcept -> registry& = delete;
 
     ///
     /// \return A new entity holding the number of instances of \ref ecs::entity created.
     ///
-    [[nodiscard]] auto create_entity() const noexcept -> entity;
+    [[nodiscard]] auto create_entity() noexcept -> entity;
 
     ///
     /// \brief Creates a new \p T placed inside \ref m_data.

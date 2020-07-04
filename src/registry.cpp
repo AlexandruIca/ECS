@@ -18,7 +18,7 @@ auto log_entity_iterated(entity const e) -> void
 
 namespace ecs {
 
-auto registry::create_entity() const noexcept -> entity
+auto registry::create_entity() noexcept -> entity
 {
     spdlog::info("Created entity #{}", m_current_entity_id.load());
     return entity{ m_current_entity_id++ };
