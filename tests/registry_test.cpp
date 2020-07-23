@@ -1,7 +1,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include <doctest/doctest.h>
 
-#include "registry.hpp"
+#include "ecs/registry.hpp"
 
 struct position
 {
@@ -72,4 +72,38 @@ TEST_CASE("[ecs::registry] Creating more entities conditionally")
 
     REQUIRE(pos_sum == doctest::Approx{ 2'500 });
     REQUIRE(vel_sum == doctest::Approx{ 5'000 });
+}
+
+struct dummy1
+{
+    int a;
+};
+
+struct dummy2
+{
+    int b;
+};
+
+TEST_CASE("[ecs::registry] Iterating over entities with multiple components")
+{
+    constexpr int num_entities = 10;
+
+    ecs::registry r{};
+
+    for(int i = 0; i < num_entities; ++i) {
+        auto e = r.create_entity();
+        auto const value = static_cast<double>(i);
+
+        r.emplace<position>(e, value, value);
+        r.emplace<velocity>(e, value);
+
+        if(i % 2 == 0) {
+            r.emplace<dummy1>(e, i);
+        }
+        if(i % 3 == 0) {
+            r.emplace<dummy2>(e, i);
+        }
+    }
+
+    r.for_each<position, velocity, dummy1, dummy2>([] {});
 }

@@ -1,6 +1,7 @@
+#include <fmt/format.h>
 #include <spdlog/spdlog.h>
 
-#include "registry.hpp"
+#include "ecs/registry.hpp"
 
 namespace ecs::impl {
 
@@ -12,6 +13,11 @@ auto log_type_emplaced(id_type const id) -> void
 auto log_entity_iterated(entity const e) -> void
 {
     spdlog::info("Iterated over entity #{}", e.id());
+}
+
+auto log_entity_union(std::vector<id_type> const& v) -> void
+{
+    spdlog::info("Entity union deduced as: {}", fmt::join(v, ", "));
 }
 
 } // namespace ecs::impl

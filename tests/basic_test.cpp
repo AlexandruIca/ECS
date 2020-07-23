@@ -3,7 +3,7 @@
 
 #include <type_traits>
 
-#include "id_type.hpp"
+#include "ecs/id_type.hpp"
 
 TEST_CASE("Verifying doctest works correctly")
 {

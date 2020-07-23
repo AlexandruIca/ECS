@@ -2,21 +2,26 @@
 #define REGISTRY_HPP
 #pragma once
 
+#include <algorithm>
+#include <array>
 #include <atomic>
 #include <cstddef>
 #include <functional>
+#include <iterator>
+#include <type_traits>
 #include <unordered_map>
 #include <utility>
 #include <vector>
 
-#include "entity.hpp"
-#include "id_type.hpp"
-#include "type_info.hpp"
+#include "ecs/entity.hpp"
+#include "ecs/id_type.hpp"
+#include "ecs/type_info.hpp"
 
 namespace ecs::impl {
 
 auto log_type_emplaced(id_type id) -> void;
 auto log_entity_iterated(entity e) -> void;
+auto log_entity_union(std::vector<id_type> const& v) -> void;
 
 } // namespace ecs::impl
 
@@ -108,6 +113,8 @@ public:
     template<typename T, typename... Args>
     auto emplace(entity const e, Args&&... args) -> T&
     {
+        static_assert(std::is_nothrow_move_assignable_v<T>, "Registry types must be nothrow move assignable");
+
         id_type const id = get_id<T>();
         impl::log_type_emplaced(id);
 
@@ -143,6 +150,12 @@ public:
         return *reinterpret_cast<T*>(location);
     }
 
+    ///
+    /// \brief Iterate over entities with only _one_ component of type \p T.
+    ///
+    /// This is the fastest iteration. If you don't need to iterate through entities with multiple components don't do
+    /// it, this is very efficient since it iterates through contiguous memory.
+    ///
     template<typename T, typename F>
     auto for_each(F&& f) -> void
     {
@@ -162,6 +175,50 @@ public:
             std::invoke(f, data);
             data_index += sizeof(T);
         }
+    }
+
+    ///
+    /// \brief Iterate over entities with multiple components.
+    ///
+    /// When calling `registry::for_each<T1, T2, ..., Tn>([]{...})` the callback will receive n references to types
+    /// `T1, ..., Tn` of the entities that have at least `T1, ..., Tn` components.
+    ///
+    template<typename T1, typename T2, typename... Ts, typename F>
+    auto for_each(F&& f) -> void
+    {
+        std::array<id_type, sizeof...(Ts) + 2> const ids = { get_id<T1>(), get_id<T2>(), get_id<Ts>()... };
+        std::vector<id_type> intersection{};
+
+        intersection.reserve(m_entities[ids[0]].size());
+
+        for(auto const e : m_entities[ids[0]]) {
+            intersection.push_back(e.id());
+        }
+
+        for(id_type entity_index = 1; entity_index < ids.size(); ++entity_index) {
+            std::vector<id_type> entities_for_type{};
+
+            entities_for_type.reserve(m_entities[ids[entity_index]].size());
+
+            for(auto const e : m_entities[ids[entity_index]]) {
+                entities_for_type.push_back(e.id());
+            }
+
+            std::vector<id_type> tmp_intersection{};
+            tmp_intersection.reserve(intersection.size());
+
+            std::set_intersection(intersection.begin(),
+                                  intersection.end(),
+                                  entities_for_type.begin(),
+                                  entities_for_type.end(),
+                                  std::back_inserter(tmp_intersection));
+
+            intersection = std::move(tmp_intersection);
+        }
+
+        impl::log_entity_union(intersection);
+
+        static_cast<void>(f);
     }
 };
 

@@ -3,7 +3,7 @@
 
 #include <utility>
 
-#include "entity.hpp"
+#include "ecs/entity.hpp"
 
 TEST_CASE("[ecs::entity] Basic - constructors, operator==, operator=...")
 {

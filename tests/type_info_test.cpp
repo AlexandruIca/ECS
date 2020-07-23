@@ -1,7 +1,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include <doctest/doctest.h>
 
-#include "type_info.hpp"
+#include "ecs/type_info.hpp"
 
 TEST_CASE("[ecs::get_id] Basic requirements")
 {
